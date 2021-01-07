@@ -1,0 +1,18 @@
+development: &defaults
+  adapter: postgresql
+  encoding: unicode
+  database: planner_backend_dev
+  pool: 2
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+
+test:
+  <<: *defaults
+  database: planner_backend_test
+
+production:
+  <<: *defaults
+  adapter: postgresql
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
