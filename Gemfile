@@ -15,8 +15,10 @@ gem 'sinatra-activerecord'
 gem 'yaml'
 
 group :development do
+  gem 'database_consistency', require: false
   gem 'rubocop'
   gem 'sinatra-contrib', require: false
+  gem 'strong_migrations'
 end
 
 group :development, :test do

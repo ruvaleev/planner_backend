@@ -3,7 +3,9 @@
 RSpec.describe User, type: :model do
   subject(:user) { build(:user) }
 
+  it { is_expected.to have_many(:areas).dependent(:destroy) }
   it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_presence_of(:password) }
   it { is_expected.to validate_uniqueness_of(:email) }
 
   context 'encrypting/decrypting password' do
