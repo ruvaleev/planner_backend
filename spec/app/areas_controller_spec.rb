@@ -29,4 +29,41 @@ describe App::AreasController, type: :request do
       end
     end
   end
+
+  describe 'POST /' do
+    subject(:send_request) { post '/', params, headers }
+
+    it_behaves_like 'request authorization required'
+    it_behaves_like 'user authorization required'
+
+    context 'when area has valid parameters' do
+      let(:params) { { area: attributes_for(:area) } }
+
+      it_behaves_like 'returns status', 200
+
+      it 'creates new Area for current user' do
+        expect { send_request }.to change(user.areas, :count).by(1)
+      end
+
+      it 'returns created area in response' do
+        send_request
+        expect(last_response.body).to include(params[:area][:title])
+      end
+    end
+
+    context 'when area has invalid parameters' do
+      let(:params) { { area: {} } }
+
+      it "doesn't create new Area" do
+        expect { send_request }.not_to change(Area, :count)
+      end
+
+      it_behaves_like 'returns status', 403
+
+      it 'returns error message in response' do
+        send_request
+        expect(parsed_body['errors']).to eq({ 'title' => ["can't be blank"] })
+      end
+    end
+  end
 end
