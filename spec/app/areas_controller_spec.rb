@@ -68,9 +68,8 @@ describe App::AreasController, type: :request do
   end
 
   describe 'DELETE /' do
-    subject(:send_request) { delete '/', params, headers }
+    subject(:send_request) { delete "/#{area.id}", params, headers }
 
-    let(:params) { { id: area.id } }
     let!(:area) { create(:area, user: user) }
 
     it_behaves_like 'request authorization required'

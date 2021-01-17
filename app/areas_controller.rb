@@ -4,24 +4,19 @@ require_relative 'application_controller'
 
 module App
   class AreasController < ApplicationController
-    get '/' do
-      authorize(current_user)
+    before { authorize(current_user) }
 
+    get '/' do
       return_success(areas: Area.fetch_for_user(current_user.id))
     end
 
     post '/' do
-      authorize(current_user)
       area = current_user.areas.create(params[:area])
-      area.persisted? ? return_success(areas: [area]) : return_errors(area.errors.messages)
+      area.persisted? ? return_success(area: area) : return_errors(area.errors.messages)
     end
 
-    delete '/' do
-      authorize(current_user)
-      area = current_user.areas.find_by(id: params[:id])
-
-      return_not_found if area.blank?
-
+    delete '/:id' do
+      area = current_user.areas.find(params[:id])
       area.destroy
       return_success
     end

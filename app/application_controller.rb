@@ -28,6 +28,10 @@ module App
       authorize_request
     end
 
+    error ActiveRecord::RecordNotFound do
+      return_not_found
+    end
+
     private
 
     def authorize(condition)
