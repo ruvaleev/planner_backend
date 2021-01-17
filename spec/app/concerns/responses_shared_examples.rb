@@ -15,3 +15,12 @@ RSpec.shared_examples 'returns unauthorized error' do
     expect(parsed_body['errors']).to eq ['Unauthorized']
   end
 end
+
+RSpec.shared_examples 'returns not found error' do
+  it_behaves_like 'returns status', 404
+
+  it 'returns Not Found' do
+    send_request
+    expect(parsed_body['errors']).to eq({ 'record' => 'Not Found' })
+  end
+end

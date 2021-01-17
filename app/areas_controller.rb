@@ -15,5 +15,15 @@ module App
       area = current_user.areas.create(params[:area])
       area.persisted? ? return_success(areas: [area]) : return_errors(area.errors.messages)
     end
+
+    delete '/' do
+      authorize(current_user)
+      area = current_user.areas.find_by(id: params[:id])
+
+      return_not_found if area.blank?
+
+      area.destroy
+      return_success
+    end
   end
 end

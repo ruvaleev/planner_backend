@@ -66,4 +66,32 @@ describe App::AreasController, type: :request do
       end
     end
   end
+
+  describe 'DELETE /' do
+    subject(:send_request) { delete '/', params, headers }
+
+    let(:params) { { id: area.id } }
+    let!(:area) { create(:area, user: user) }
+
+    it_behaves_like 'request authorization required'
+    it_behaves_like 'user authorization required'
+
+    context 'when params are valid' do
+      it_behaves_like 'returns status', 200
+
+      it 'destroys area' do
+        expect { send_request }.to change(user.areas, :count).by(-1)
+      end
+    end
+
+    context 'when params are invalid' do
+      let!(:area) { create(:area) }
+
+      it_behaves_like 'returns not found error'
+
+      it "doesn't delete any Area" do
+        expect { send_request }.not_to change(Area, :count)
+      end
+    end
+  end
 end
