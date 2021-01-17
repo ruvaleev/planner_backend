@@ -13,19 +13,18 @@ describe App::UsersController, type: :request do
     let(:user_params) { attributes_for(:user) }
     let(:params) { { user: user_params } }
 
-    it_behaves_like 'authorization required'
+    it_behaves_like 'request authorization required'
 
     context 'when params valid' do
-      before(send_request: true) { send_request }
+      it_behaves_like 'returns status', 200
 
       it 'creates new user' do
         expect { send_request }.to change(User, :count).by(1)
       end
 
-      it_behaves_like 'returns status', 200
-
-      it 'returns email of created user in response', send_request: true do
-        expect(last_response.body).to include(User.last.email)
+      it 'saves new user id to session' do
+        send_request
+        expect(last_request.env['rack.session'][:user_id]).to eq(User.last.id)
       end
     end
 
