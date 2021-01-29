@@ -7,7 +7,12 @@ module App
     post '/' do
       user = User.create(params[:user])
 
-      user.persisted? ? [200, { user: user.email }.to_json] : [403, { errors: user.errors.messages }.to_json]
+      if user.persisted?
+        save_user_id_to_session(user.id)
+        200
+      else
+        return_errors(user.errors.messages)
+      end
     end
   end
 end

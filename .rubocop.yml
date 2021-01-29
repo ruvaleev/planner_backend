@@ -17,7 +17,6 @@ Naming/MethodName:
     - 'spec/**/*'
 GlobalVars:
   AllowedVariables:
-    - $redis
     - $PROGRAM_NAME
   
 Style/Documentation:

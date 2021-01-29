@@ -20,6 +20,8 @@ GEM
     database_cleaner-active_record (1.8.0)
       activerecord
       database_cleaner (~> 1.8.0)
+    database_consistency (0.8.13)
+      activerecord (>= 3.2)
     diff-lcs (1.4.4)
     factory_bot (6.1.0)
       activesupport (>= 5.0.0)
@@ -43,7 +45,6 @@ GEM
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
     rake (13.0.3)
-    redis (4.2.5)
     regexp_parser (2.0.3)
     require_all (3.0.0)
     rexml (3.2.4)
@@ -90,6 +91,8 @@ GEM
       rack-protection (= 2.1.0)
       sinatra (= 2.1.0)
       tilt (~> 2.0)
+    strong_migrations (0.7.5)
+      activerecord (>= 5)
     tilt (2.0.10)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
@@ -104,6 +107,7 @@ DEPENDENCIES
   bcrypt
   byebug
   database_cleaner-active_record
+  database_consistency
   factory_bot
   ffaker
   json
@@ -111,7 +115,6 @@ DEPENDENCIES
   pg
   rack-test
   rake
-  redis
   require_all
   rspec
   rubocop
@@ -120,6 +123,7 @@ DEPENDENCIES
   sinatra
   sinatra-activerecord
   sinatra-contrib
+  strong_migrations
   yaml
 
 BUNDLED WITH

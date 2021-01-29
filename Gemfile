@@ -7,7 +7,6 @@ gem 'json'
 gem 'logger'
 gem 'pg'
 gem 'rake'
-gem 'redis'
 gem 'require_all'
 gem 'securerandom'
 gem 'sinatra'
@@ -15,8 +14,10 @@ gem 'sinatra-activerecord'
 gem 'yaml'
 
 group :development do
+  gem 'database_consistency', require: false
   gem 'rubocop'
   gem 'sinatra-contrib', require: false
+  gem 'strong_migrations'
 end
 
 group :development, :test do
