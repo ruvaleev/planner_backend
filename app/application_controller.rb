@@ -8,7 +8,9 @@ require_relative 'helpers/response_helpers'
 module App
   class ApplicationController < Sinatra::Base
     configure do
-      enable :sessions
+      use Rack::Session::Cookie, key: 'rack.session',
+                                 path: '/',
+                                 secret: 'some secret key'
     end
     configure :production, :development do
       enable :logging
@@ -17,11 +19,14 @@ module App
       register Sinatra::Reloader
     end
 
+    set show_exceptions: false
+
     before do
-      response.headers['Access-Control-Allow-Origin'] = '*'
+      response.headers['Access-Control-Allow-Origin'] = 'http://localhost:9000'
+      response.headers['Access-Control-Allow-Credentials'] = 'true'
       if request.request_method == 'OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = '*'
-        response.headers['Access-Control-Allow-Methods'] = 'DELETE, GET, POST'
+        response.headers['Access-Control-Allow-Headers'] = 'authorization, content-type'
+        response.headers['Access-Control-Allow-Methods'] = 'DELETE, GET, PATCH, POST'
 
         halt 200
       end
@@ -30,6 +35,10 @@ module App
 
     error ActiveRecord::RecordNotFound do
       return_not_found
+    end
+
+    error do
+      500
     end
 
     private

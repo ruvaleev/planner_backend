@@ -12,7 +12,7 @@ module App
 
     post '/' do
       area = current_user.areas.create(params[:area])
-      area.persisted? ? return_success(area: area) : return_errors(area.errors.messages)
+      area.persisted? ? return_success(area: area.represent) : return_errors(area.errors.messages)
     end
 
     delete '/:id' do
