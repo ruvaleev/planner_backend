@@ -5,11 +5,10 @@ require_relative 'concerns/authorized_request_shared_context'
 require_relative 'concerns/responses_shared_examples'
 
 describe App::AuthController, type: :request do
-  include_context 'authorized request'
   include_context 'authorized user'
 
   describe 'GET /' do
-    subject(:send_request) { get '/', params, headers }
+    subject(:send_request) { get '/', {}, headers }
 
     it_behaves_like 'request authorization required'
     it_behaves_like 'user authorization required'
@@ -46,8 +45,23 @@ describe App::AuthController, type: :request do
     end
   end
 
+  describe 'POST /demo' do
+    subject(:send_request) { post '/demo', {}, headers }
+
+    include_context 'authorized request'
+
+    let!(:user) { create(:demo_user) }
+
+    it_behaves_like 'request authorization required'
+    it 'saves found demo user id to session' do
+      send_request
+      expect(last_request.env['rack.session'][:user_id]).to eq user.id
+    end
+    it_behaves_like 'returns status', 200
+  end
+
   describe 'DELETE /' do
-    subject(:send_request) { delete '/', params, headers }
+    subject(:send_request) { delete '/', {}, headers }
 
     it_behaves_like 'request authorization required'
     it_behaves_like 'returns status', 200

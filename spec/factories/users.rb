@@ -5,4 +5,9 @@ FactoryBot.define do
     email { FFaker::Internet.email }
     password { FFaker::Internet.password }
   end
+
+  factory :demo_user, parent: :user do
+    email { 'demo@user.com' }
+    password { 'demo_password' }
+  end
 end

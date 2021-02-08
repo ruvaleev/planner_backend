@@ -17,6 +17,11 @@ module App
       200
     end
 
+    post '/demo' do
+      save_user_id_to_session(demo_user.id)
+      200
+    end
+
     delete '/' do
       save_user_id_to_session(nil)
       200
@@ -26,6 +31,10 @@ module App
 
     def check_password(user, password)
       user.present? && BCrypt::Password.new(user.password) == password
+    end
+
+    def demo_user
+      @demo_user ||= User.find_by(email: 'demo@user.com')
     end
   end
 end
