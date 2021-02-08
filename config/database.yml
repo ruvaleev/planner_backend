@@ -5,6 +5,7 @@ development: &defaults
   pool: 2
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
 
 test:
   <<: *defaults

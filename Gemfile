@@ -2,6 +2,7 @@
 
 source 'https://rubygems.org'
 
+gem 'activerecord', '< 6.1.0'
 gem 'bcrypt'
 gem 'json'
 gem 'logger'
