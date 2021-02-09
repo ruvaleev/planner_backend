@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Карьера", 
+    "todos": ["Найти работу", "Стать лучшим сотрудником", "Добиться премии", "Стать главой отдела"]
+  },
+  {
+    "title": "Career", 
+    "todos": ["Get a job", "Become the most valuable employee", "Achieve a bonus", "Become the head of department"]
+  },
+  {
+    "title": "Здоровье",
+    "todos": ["Записаться в тренажерку", "Начать бегать по утрам", "Найти хорошего массажиста", "Нанять тренера"]
+  },
+  {
+    "title": "Health",
+    "todos": ["Buy gym abonnement", "Start jogging every morning", "Find good massage therapist", "Hire a trainer"]
+  },
+  {
+    "title": "Саморазвитие",
+    "todos": ["Прочесть минимум 2 книги за этот месяц", "Записаться на проф курсы", "Начать медитировать", "Начать пользоваться Планировщиком"]
+  },
+  {
+    "title": "Self-development",
+    "todos": ["Read at least 2 books for current month", "Sign up to a prof course", "Start meditating", "Start use the Planner"]
+  }
+]

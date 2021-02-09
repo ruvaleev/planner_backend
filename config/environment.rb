@@ -12,3 +12,5 @@ ActiveRecord::Base.establish_connection(ENV['DATABASE_URL']) if ENV['DATABASE_UR
 
 require_all 'app'
 require_all 'models'
+require_all 'services'
+require_all 'workers'
