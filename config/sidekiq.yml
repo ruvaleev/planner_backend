@@ -1,0 +1,6 @@
+# config/sidekiq.yml
+
+:schedule:
+  resetter:
+    class: DemoDataResetterWorker
+    cron: '00 00 * * *'   # Runs every day in midnight
