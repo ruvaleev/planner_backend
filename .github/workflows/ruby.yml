@@ -1,0 +1,59 @@
+name: Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12.0
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Ruby version specified in `.ruby-version`
+        uses: eregon/use-ruby-action@master
+      - name: Install required apt packages
+        run: |
+          sudo apt-get -y install libvips42
+      - name: Setup cache key and directory for gems cache
+        uses: actions/cache@v1.0.3
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-
+      - name: Bundle install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Rubocop
+        run: |
+          bundle exec rubocop
+      - name: Setup Database
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/planner_backend_test
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          RACK_ENV: test
+        run: |
+          bundle exec rake db:create db:schema:load
+      - name: Tests
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/planner_backend_test
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        run: |
+          cp secrets.yml.sample secrets.yml
+          bundle exec rspec spec/
