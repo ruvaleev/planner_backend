@@ -22,7 +22,7 @@ module App
     set show_exceptions: false
 
     before do
-      response.headers['Access-Control-Allow-Origin'] = 'http://localhost:9000'
+      response.headers['Access-Control-Allow-Origin'] = allowed_origin
       response.headers['Access-Control-Allow-Credentials'] = 'true'
       if request.request_method == 'OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'authorization, content-type'
@@ -42,6 +42,10 @@ module App
     end
 
     private
+
+    def allowed_origin
+      ENV['ORIGINS_URLS'].split(', ').find { |origin| origin == request.env['HTTP_ORIGIN'] } || ''
+    end
 
     def authorize(condition)
       return_unauthorized unless condition
