@@ -3,4 +3,4 @@
 :schedule:
   resetter:
     class: DemoDataResetterWorker
-    cron: '00 00 * * *'   # Runs every day in midnight
+    cron: '0 */1 * * *'   # Runs every hour
