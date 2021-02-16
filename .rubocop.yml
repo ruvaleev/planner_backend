@@ -1,13 +1,14 @@
 AllCops:
-  TargetRubyVersion: 2.6.5
+  TargetRubyVersion: 2.7
   DisplayCopNames: true
   NewCops: enable
   SuggestExtensions: false
   Exclude:
-    - 'notes/*'
-    - 'db/schema.rb'
+    - db/schema.rb
+    - notes/*
+    - vendor/bundle/**/*
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 Metrics/BlockLength:
   Exclude:
@@ -15,14 +16,14 @@ Metrics/BlockLength:
 Naming/MethodName:
   Exclude:
     - 'spec/**/*'
-GlobalVars:
-  AllowedVariables:
-    - $PROGRAM_NAME
   
 Style/Documentation:
   Enabled: false
 Style/FormatStringToken:
   Enabled: false
+Style/GlobalVars:
+  AllowedVariables:
+    - $PROGRAM_NAME
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 Layout/EmptyLinesAroundAttributeAccessor:
