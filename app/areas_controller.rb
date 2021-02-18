@@ -7,6 +7,7 @@ module App
     before { authorize(current_user) }
 
     get '/' do
+      Rollbar.info("GET AREAS. CURRENT_USER: #{current_user.id}")
       return_success(areas: Area.fetch_for_user(current_user.id))
     end
 

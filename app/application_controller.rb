@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rollbar/middleware/sinatra'
 require 'sinatra/base'
 require 'sinatra/reloader' if development?
 
@@ -7,6 +8,8 @@ require_relative 'helpers/response_helpers'
 
 module App
   class ApplicationController < Sinatra::Base
+    use Rollbar::Middleware::Sinatra
+
     configure do
       use Rack::Session::Cookie, key: 'rack.session',
                                  path: '/',

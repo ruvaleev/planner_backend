@@ -9,6 +9,7 @@ def return_success(body = {})
 end
 
 def return_errors(errors)
+  Rollbar.info("ERROR. CURRENT_USER: #{current_user&.id}. PARAMS #{request&.params}")
   halt([403, { errors: errors }.to_json])
 end
 
